@@ -10,11 +10,13 @@ jobs:
                 cowsay -f dragon "Run for cover, I am a DRAGON.....RAWR" >> dragon.txt
                 sleep 30
     Test_job:
+        needs: [Build_job]
         runs-on: ubuntu-latest
         steps:
             - name: Test file exists
               run: grep -i "dragon" dragon.txt
     Deploy_job:
+        needs: [Test_job]
         runs-on: ubuntu-latest
         steps: 
             - name: Read file and deploy
