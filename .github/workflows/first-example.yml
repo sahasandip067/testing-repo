@@ -14,8 +14,7 @@ jobs:
             cat README.md
 
         - name: Execute shell script
-          run: ./ascii-run.sh
-
-        - name: List repo files
-          run: ls -ltra
+          run: |
+            chmod +x ascii-run.sh
+            ./ascii-run.sh
             
