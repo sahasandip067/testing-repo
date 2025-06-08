@@ -1,4 +1,4 @@
-name: first workflow
+name: Workflow with multiple jobs
 on: push
 jobs:
     Build_job:
@@ -9,16 +9,29 @@ jobs:
                 sudo apt-get install cowsay -y
                 cowsay -f dragon "Run for cover, I am a DRAGON.....RAWR" >> dragon.txt
                 sleep 30
+            - name: Upload the build artifact
+              uses: actions/upload-artifact@v3
+              with:
+                name: dragon-text-file
+                path: dragon.txt #Saving in the root path
     Test_job:
         needs: [Build_job]
         runs-on: ubuntu-latest
         steps:
+            - name: Download the build artifact
+              uses: actions/download-artifact@v3
+              with:
+                name: dragon-text-file
             - name: Test file exists
               run: grep -i "dragon" dragon.txt
     Deploy_job:
         needs: [Test_job]
         runs-on: ubuntu-latest
-        steps: 
+        steps:
+            - name: Download the build artifact
+              uses: actions/download-artifact@v3
+              with:
+                name: dragon-text-file
             - name: Read file and deploy
               run: |
                 cat dragon.txt
