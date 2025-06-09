@@ -2,8 +2,6 @@ name: Workflow with multiple jobs
 on: push
 env: 
     CONTAINER_REGISTRY: docker.io
-    DOCKER_USERNAME: dockerUsername
-    DOCKER_PASSWORD: s3cUrePassw0rd
     IMAGE_NAME: github-actions-nginx
 jobs:
     Build_job:
@@ -12,7 +10,7 @@ jobs:
             - name: Docker Build and upload artifact
               run: |
                 echo docker build -t $CONTAINER_REGISTRY/$DOCKER_USERNAME/$IMAGE_NAME:latest
-                echo docker login --username=$DOCKER_USERNAME --password=$DOCKER_PASSWORD
+                echo docker login --username=$DOCKER_USERNAME --password=${{ secrets.DOCKER_PASSWORD }}
                 echo docker push $CONTAINER_REGISTRY/$DOCKER_USERNAME/$IMAGE_NAME:latest
 
     Deploy_job:
