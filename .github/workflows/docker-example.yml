@@ -11,13 +11,13 @@ jobs:
         steps:
             - name: Docker Build and upload artifact
               run: |
-                docker build -t $CONTAINER_REGISTRY/$DOCKER_USERNAME/$IMAGE_NAME:latest
-                docker login --username=$DOCKER_USERNAME --password=$DOCKER_PASSWORD
-                docker push $CONTAINER_REGISTRY/$DOCKER_USERNAME/$IMAGE_NAME:latest
+                echo docker build -t $CONTAINER_REGISTRY/$DOCKER_USERNAME/$IMAGE_NAME:latest
+                echo docker login --username=$DOCKER_USERNAME --password=$DOCKER_PASSWORD
+                echo docker push $CONTAINER_REGISTRY/$DOCKER_USERNAME/$IMAGE_NAME:latest
 
     Deploy_job:
         needs: [Build_job] 
         runs-on: ubuntu-latest
         steps:
-            - name: Docker 
-              run: docker run -d -p 8080:80 $CONTAINER_REGISTRY/$DOCKER_USERNAME/$IMAGE_NAME:latest
+            - name: Docker run
+              run: echo docker run -d -p 8080:80 $CONTAINER_REGISTRY/$DOCKER_USERNAME/$IMAGE_NAME:latest
