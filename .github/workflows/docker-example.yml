@@ -5,6 +5,7 @@ env:
     IMAGE_NAME: github-actions-nginx
 jobs:
     Build_job:
+        timeout-minutes: 1
         runs-on: ubuntu-latest
         steps:
             - name: Docker Build and upload artifact
@@ -15,6 +16,7 @@ jobs:
 
     Deploy_job:
         needs: [Build_job] 
+        timeout-minutes: 1 #automatically cancel the job after 1 minute
         concurrency:
             group: production-deployment
             cancel-in-progress: false #wait for the other deploy job to be completed
