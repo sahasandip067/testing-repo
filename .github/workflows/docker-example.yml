@@ -1,5 +1,17 @@
 name: Workflow with multiple jobs
-on: push
+on: 
+    push:
+        branches: 
+            - main
+            - '!feature/*' #ignoring pushing to any branch name starting with feature using !
+    pull_request:
+        types:
+            - opened
+            - closed
+        paths-ignore:
+            - README.md #workflow will only run when a pull request that includes a change on any file rather than README.md
+        branches:
+            - main #configures your workflow to only run on pull request that target specific branches
 env: 
     CONTAINER_REGISTRY: docker.io
     IMAGE_NAME: github-actions-nginx
